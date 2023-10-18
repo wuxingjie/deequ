@@ -81,6 +81,7 @@ object AnalyzerContext {
     : Seq[SimpleMetricOutput] = {
 
     analyzerContext.metricMap
+      .view
       // Get matching analyzers
       .filterKeys(analyzer => forAnalyzers.isEmpty || forAnalyzers.contains(analyzer))
       // Get analyzers with successful results

@@ -16,15 +16,11 @@
 
 package com.amazon.deequ.analyzers
 
-import java.util.concurrent.ConcurrentHashMap
-
-import com.google.common.io.Closeables
-import org.apache.hadoop.fs.{FSDataInputStream, FSDataOutputStream, FileSystem, Path}
-import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.expressions.aggregate.{ApproximatePercentile, DeequHyperLogLogPlusPlusUtils}
-import org.apache.spark.sql.SaveMode
+import org.apache.spark.sql.{SaveMode, SparkSession}
 
-import scala.collection.JavaConversions._
+import java.util.concurrent.ConcurrentHashMap
+import scala.jdk.CollectionConverters._
 import scala.util.hashing.MurmurHash3
 
 private object StateInformation {
@@ -40,7 +36,7 @@ trait StateLoader {
 
 /** Persist a state for an analyzer */
 trait StatePersister {
-  def persist[S <: State[_]](analyzer: Analyzer[S, _], state: S)
+  def persist[S <: State[_]](analyzer: Analyzer[S, _], state: S): Unit
 }
 
 /** Store states in memory */
@@ -58,7 +54,7 @@ case class InMemoryStateProvider() extends StateLoader with StatePersister {
 
   override def toString: String = {
     val buffer = new StringBuilder()
-    statesByAnalyzer.foreach { case (analyzer, state) =>
+    statesByAnalyzer.asScala.foreach { case (analyzer, state) =>
       buffer.append(analyzer.toString)
       buffer.append(" => ")
       buffer.append(state.toString)

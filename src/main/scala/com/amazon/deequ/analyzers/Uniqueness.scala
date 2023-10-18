@@ -37,7 +37,7 @@ case class Uniqueness(columns: Seq[String], where: Option[String] = None)
   }
 
   override def fromAggregationResult(result: Row, offset: Int, fullColumn: Option[Column]): DoubleMetric = {
-    val fullColumnUniqueness = when(fullColumn.orNull.equalTo(1), true).otherwise(false)
+    val fullColumnUniqueness = when((fullColumn.getOrElse(null)).equalTo(1), true).otherwise(false)
     super.fromAggregationResult(result, offset, Option(fullColumnUniqueness))
   }
 

@@ -34,11 +34,11 @@ import com.amazon.deequ.analyzers.{AnalysisTest, AnalyzerTests, IncrementalAnaly
 import com.amazon.deequ.analyzers.runners.{AnalysisRunnerTests, AnalyzerContextTest}
 import com.amazon.deequ.{VerificationResultTest, VerificationSuiteTest}
 
-//(new VerificationSuiteTest).execute()
-//(new VerificationResultTest).execute()
-//(new AnalysisRunnerTests).execute()
-//(new AnalyzerContextTest).execute()
-//(new AnalysisTest).execute()
-//(new AnalyzerTests).execute()
-//(new IncrementalAnalysisTest).execute()
+(new VerificationSuiteTest).execute()
+(new VerificationResultTest).execute()
+(new AnalysisRunnerTests).execute()
+(new AnalyzerContextTest).execute()
+(new AnalysisTest).execute()
+(new AnalyzerTests).execute()
+(new IncrementalAnalysisTest).execute()
 //Add additional test classes as needed

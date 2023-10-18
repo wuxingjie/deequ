@@ -21,8 +21,8 @@ import org.apache.spark.sql.{Column, Row}
 import Analyzers._
 
 case class CustomSqlState(stateOrError: Either[Double, String]) extends DoubleValuedState[CustomSqlState] {
-  lazy val state: Double = stateOrError.left.get
-  lazy val error: String = stateOrError.right.get
+  lazy val state = stateOrError.left.get
+  lazy val error = stateOrError.right.get
 
   override def sum(other: CustomSqlState): CustomSqlState = {
     CustomSqlState(Left(state + other.state))

@@ -34,7 +34,7 @@ case class UniqueValueRatio(columns: Seq[String], where: Option[String] = None)
   override def fromAggregationResult(result: Row, offset: Int, fullColumn: Option[Column] = None): DoubleMetric = {
     val numUniqueValues = result.getDouble(offset)
     val numDistinctValues = result.getLong(offset + 1).toDouble
-    val fullColumnUniqueness = when(fullColumn.orNull.equalTo(1), true).otherwise(false)
+    val fullColumnUniqueness = when((fullColumn.getOrElse(null)).equalTo(1), true).otherwise(false)
     toSuccessMetric(numUniqueValues / numDistinctValues, Option(fullColumnUniqueness))
   }
 

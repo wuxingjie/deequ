@@ -70,7 +70,7 @@ case class PatternMatch(column: String, pattern: Regex, where: Option[String] = 
 
   override def equals(obj: Any): Boolean = {
     obj match {
-      case o: PatternMatch => internalObj.equals(o.internalObj)
+      case o: PatternMatch => internalObj.equals(o.asInstanceOf[PatternMatch].internalObj)
       case _ => false
     }
   }

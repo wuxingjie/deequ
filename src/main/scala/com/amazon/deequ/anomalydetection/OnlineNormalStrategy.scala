@@ -117,7 +117,7 @@ case class OnlineNormalStrategy(
       }
     }
     ret
-  }.toSeq
+  }
 
 
   /**

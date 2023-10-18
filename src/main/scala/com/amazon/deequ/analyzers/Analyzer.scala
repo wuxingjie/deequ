@@ -326,7 +326,8 @@ object Preconditions {
     if (caseSensitive) {
       schema.fieldNames.contains(escapedColumn)
     } else {
-      schema.fieldNames.find(_.equalsIgnoreCase(escapedColumn)).isDefined
+      schema.fieldNames.exists(_.equalsIgnoreCase(escapedColumn))
+        //.find(_.equalsIgnoreCase(escapedColumn)).isDefined
     }
   }
 
@@ -453,7 +454,7 @@ private[deequ] object Analyzers {
     if (nullInResult) {
       None
     } else {
-      Option(func(Unit))
+      Option(func(()))
     }
   }
 

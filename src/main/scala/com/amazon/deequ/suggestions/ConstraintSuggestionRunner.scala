@@ -138,11 +138,12 @@ class ConstraintSuggestionRunner {
     val columnsWithSuggestions = constraintSuggestions
       .map(suggestion => suggestion.columnName -> suggestion)
       .groupBy { case (columnName, _) => columnName }
+      .view
       .mapValues { groupedSuggestionsWithColumnNames =>
         groupedSuggestionsWithColumnNames.map { case (_, suggestion) => suggestion } }
 
     ConstraintSuggestionResult(columnProfiles.profiles, columnProfiles.numRecords,
-      columnsWithSuggestions, verificationResult)
+      columnsWithSuggestions.toMap, verificationResult)
   }
 
   private[this] def splitTrainTestSets(

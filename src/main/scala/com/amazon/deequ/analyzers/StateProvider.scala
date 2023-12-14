@@ -131,6 +131,9 @@ case class HdfsStateProvider(
         val serializedDigest = ApproximatePercentile.serializer.serialize(percentileDigest)
         persistBytes(serializedDigest, identifier)
 
+      case _: ExactQuantile =>
+        persistDoubleState(state.asInstanceOf[ExactQuantileState].exactQuantile, identifier)
+
       case _ =>
         throw new IllegalArgumentException(s"Unable to persist state for analyzer $analyzer.")
     }
@@ -172,6 +175,8 @@ case class HdfsStateProvider(
        case _: ApproxQuantile =>
          val percentileDigest = ApproximatePercentile.serializer.deserialize(loadBytes(identifier))
          ApproxQuantileState(percentileDigest)
+
+      case _: ExactQuantile => ExactQuantile(identifier, loadDoubleState(identifier))
 
       case _ =>
         throw new IllegalArgumentException(s"Unable to load state for analyzer $analyzer.")

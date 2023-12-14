@@ -344,6 +344,12 @@ private[deequ] object AnalyzerSerializer
         result.addProperty("quantiles", approxQuantiles.quantiles.mkString(","))
         result.addProperty("relativeError", approxQuantiles.relativeError)
 
+      case exactQuantile: ExactQuantile =>
+        result.addProperty(ANALYZER_NAME_FIELD, "ExactQuantile")
+        result.addProperty(COLUMN_FIELD, exactQuantile.column)
+        result.addProperty("quantile", exactQuantile.quantile)
+        result.addProperty(WHERE_FIELD, exactQuantile.where.orNull)
+
 
       case minLength: MinLength =>
         result.addProperty(ANALYZER_NAME_FIELD, "MinLength")
@@ -478,6 +484,11 @@ private[deequ] object AnalyzerDeserializer
         val quantile = json.get("quantiles").getAsString.split(",").map { _.toDouble }
         val relativeError = json.get("relativeError").getAsDouble
         ApproxQuantiles(column, quantile, relativeError)
+
+      case "ExactQuantile" =>
+        val column = json.get(COLUMN_FIELD).getAsString
+        val quantile = json.get("quantile").getAsDouble
+        ExactQuantile(column, quantile)
 
       case "MinLength" =>
         MinLength(
